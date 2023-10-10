@@ -379,8 +379,8 @@ those coordinates. If there is no object, it returns @racket[null].
 @chunk[<object-at>
        (define (object-at x y)
          (cond
-           [(send my-fish contains? x y) my-fish]
            [(send my-flag contains? x y) my-flag]
+           [(send my-fish contains? x y) my-fish]
            [else null]))]
 
 As with the @racket[draw-objects] method, we call the @racket[contains?] 
