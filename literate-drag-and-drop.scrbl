@@ -21,22 +21,27 @@ and its classes.
 This example implements a minimal program that draws two objects on a light 
 blue background: a rectangular flag and a @racket[standard-fish]. You can use 
 your mouse to drag the two objects around and place them anywhere on the 
-canvas. Be careful, though: this example is not robust and doesn't do any 
-bounds checking, so it is possible to drag the objects outside the window and 
-lose them forever. If this happens, you will need to restart the program. 
+canvas. Be careful, though: this example program is not robust. It doesn't do 
+any bounds checking, so it is possible to drag the objects outside the window 
+and lose them forever. If this happens, you will need to restart the program. 
 
 @section{Literate Programming}
 
 This is a 
 @hyperlink["https://en.wikipedia.org/wiki/Literate_programming"]{literate 
-program}. That means that the source code produces both the program and its 
-documentation using the same files. Racket's literate programming language, 
-called @racketmodname[scribble/lp2], separates the code from the 
-documentation and processes each of them appropriately. You can generate 
-these using either 
-@hyperlink["https://docs.racket-lang.org/drracket/index.html"]{DrRacket} or 
+program}. That means that the 
+@hyperlink["https://github.com/zamora/literate-drag-and-drop"]{source code} 
+produces both the program and its documentation using the same files. 
+Racket's literate programming language, called @racketmodname[scribble/lp2], 
+separates the code from the documentation and processes each of them 
+appropriately. You can generate these either by opening the 
+@hyperlink["https://github.com/zamora/literate-drag-and-drop/blob/main/literate-drag-and-drop.scrbl"]{source
+file} in 
+@hyperlink["https://docs.racket-lang.org/drracket/index.html"]{DrRacket} and 
+clicking on ``Scribble HTML'' or using 
 @hyperlink["https://docs.racket-lang.org/scribble/running.html"]{the 
-@racket[scribble] command line tool}. 
+@racketplainfont{scribble} command line tool} and running 
+@racketplainfont{scribble +m mine.scrbl}. 
 
 In a literate program, chunks of code are interspersed with the text of the 
 documentation. In @racketmodname[scribble/lp2], by convention, the chunks are 
@@ -60,15 +65,16 @@ us access to all the tools and functions of the Racket GUI.
        (require racket/gui)]
 
 Note: In normal programs, we can specify the Racket GUI language by using 
-@racket{#lang racket/gui}    @racket[@#,hash-lang[] @#,racketmodname[racket/gui]], however, since we are using Racket's literate 
-programming, our language is@racketmodname[scribble/lp2]}, and the current 
-version of @racketmodname[scribble/lp2] doesn't allow us to specify another 
-language for the code. Some other literate programming packages, like 
+@racket[@#,hash-lang[] @#,racketmodname[racket/gui]], however, since we are 
+using Racket's literate programming, our language is 
+@racketmodname[scribble/lp2]}, and the current version of 
+@racketmodname[scribble/lp2] doesn't allow us to specify another language for 
+the code. Some other literate programming packages, like 
 @hyperlink["https://docs.racket-lang.org/hyper-literate/"]{Suzanne Soy's 
 Hyper-literate programming} and 
 @hyperlink["https://docs.racket-lang.org/brush/index.html"]{David 
 Christiansen's Brush} provide options for specifying other languages. 
-
+S
 @section{A Class for Draggable Objects}
 
 The first thing we will do is create an abstract class called 
