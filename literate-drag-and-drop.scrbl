@@ -7,7 +7,8 @@
 
 [This example was created for the 
 @hyperlink["https://racket.discourse.group/t/the-2023-racket-summer-event"]{2023
-Racket Summer Event}.] 
+Racket Summer Event}. The source file is available at 
+@hyperlink["https://github.com/zamora/literate-drag-and-drop"]{my GitHub}.] 
 
 The @hyperlink["https://www.racket-lang.org/"]{Racket Programming Language} 
 has an excellent cross-platform 
@@ -410,10 +411,10 @@ store it in the @racket[active-object] variable. Finally, we compute the
 @subsection{Dragging Event}
 
 When we receive a dragging event, we make sure that the user is dragging on 
-the active object. Then we get the new location of the mouse and call the 
-object's @racket[on-drag] method (see ``@secref{dragging-an-object}''). We 
-pass the new location and the offsets so that @racket[on-drag] can move the 
-object smoothly. 
+an object. Then we get the new location of the mouse and call the object's 
+@racket[on-drag] method (see ``@secref{dragging-an-object}''). We pass the 
+new location and the offsets so that @racket[on-drag] can move the object 
+smoothly. 
 
 @chunk[<dragging>
        (when (not (null? active-object))
