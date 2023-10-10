@@ -60,7 +60,7 @@ us access to all the tools and functions of the Racket GUI.
        (require racket/gui)]
 
 Note: In normal programs, we can specify the Racket GUI language by using 
-@racket{#lang racket/gui}, however, since we are using Racket's literate 
+@racket{#lang racket/gui}    @racket[@#,hash-lang[] @#,racketmodname[racket/gui]], however, since we are using Racket's literate 
 programming, our language is@racketmodname[scribble/lp2]}, and the current 
 version of @racketmodname[scribble/lp2] doesn't allow us to specify another 
 language for the code. Some other literate programming packages, like 
