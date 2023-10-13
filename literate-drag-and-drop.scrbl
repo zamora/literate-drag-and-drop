@@ -34,14 +34,18 @@ program}. That means that the
 produces both the program and its documentation using the same files. 
 Racket's literate programming language, called @racketmodname[scribble/lp2], 
 separates the code from the documentation and processes each of them 
-appropriately. You can generate these either by opening the 
-@hyperlink["https://github.com/zamora/literate-drag-and-drop/blob/main/literate-drag-and-drop.scrbl"]{source
-file} in 
+appropriately.
+
+To run the program, open the @racketplainfont{literate-drag-and-drop.scrbl} 
+file in 
 @hyperlink["https://docs.racket-lang.org/drracket/index.html"]{DrRacket} and 
-clicking on ``Scribble HTML'' or using 
-@hyperlink["https://docs.racket-lang.org/scribble/running.html"]{the 
-@racketplainfont{scribble} command line tool} and running 
-@racketplainfont{scribble +m mine.scrbl}. 
+click on ``Run''. You can also run @racketplainfont{racket 
+literate-drag-and-drop.scrbl} from the command line. To generate HTML 
+documentation, either open the @racketplainfont{literate-drag-and-drop.scrbl} 
+file in 
+@hyperlink["https://docs.racket-lang.org/drracket/index.html"]{DrRacket} and 
+click on “Scribble HTML” or run @racketplainfont{scribble +m 
+literate-drag-and-drop.scrbl} from the command line. 
 
 In a literate program, chunks of code are interspersed with the text of the 
 documentation. In @racketmodname[scribble/lp2], by convention, the chunks are 
