@@ -373,7 +373,7 @@ Instead, we need the object to move as if the user clicked on the actual
 starting point. For example, if the starting point is at (100, 200), and the 
 user clicks at (130, 220), then we need to subtract 30 from the 
 @italic{x}-coordinate and 20 from the @italic{y}-coordinate so that we can 
-draw the object in the right place, without any jumps. 
+draw the object in the right spot, without any jumps. 
 
 To implement this, when the user clicks on the mouse button, we compute the 
 difference between the mouse location and the starting point and store the 
