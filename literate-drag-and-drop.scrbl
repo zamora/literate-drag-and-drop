@@ -366,14 +366,20 @@ problems for us when dragging an object.
 The issue is that a user can click anywhere within the object before dragging 
 it, and this location could be quite far away from the starting point of the 
 object. If we use the mouse location as the starting point for drawing the 
-object, the object would "jump" to its new location rather than moving 
+object, the object would ``jump'' to its new location rather than moving 
 smoothly. 
 
-Instead, we need to move the object relative to the starting point. To do 
-this, when the user clicks on the mouse button, we compute the difference 
-between the starting point and the mouse location and store the result in the 
-offset variables. Then, when we draw the object during the drag operation, we 
-add the offset so that the object gets drawn in the correct place. 
+Instead, we need the object to move as if the user clicked on the actual 
+starting point. For example, if the starting point is at (100, 200), and the 
+user clicks at (130, 220), then we need to subtract 30 from the 
+@italic{x}-coordinate and 20 from the @italic{y}-coordinate so that we can 
+draw the object in the right place, without any jumps. 
+
+To implement this, when the user clicks on the mouse button, we compute the 
+difference between the mouse location and the starting point and store the 
+result in the offset variables. Then, when we draw the object during the drag 
+operation, we subtract the offset from the mouse location, so that the object 
+is drawn in the correct place. 
 
 @subsection{Button Down Event}
 
@@ -415,8 +421,8 @@ store it in the @racket[active-object] variable. Finally, we compute the
          (let ([clicked-object (object-at x y)])
            (when (not (null? clicked-object))
              (set! active-object clicked-object)
-             (set! offset-x (- (send clicked-object get-x) x))
-             (set! offset-y (- (send clicked-object get-y) y)))))]
+             (set! offset-x (- x (send clicked-object get-x)))
+             (set! offset-y (- y (send clicked-object get-y))))))]
 
 @subsection{Dragging Event}
 
@@ -440,14 +446,14 @@ able to describe it here alongside the event handlers, and Racket's literate
 programming language will put the code where it belongs.} 
 
 Now we can finally implement the @racket[on-drag] method of the 
-@racket[draggable-object%] class. The method adds the @italic{x} and 
-@italic{y} offsets to the new mouse location, and uses the result to set the 
+@racket[draggable-object%] class. The method subtracts the @italic{x} and 
+@italic{y} offsets from the mouse location and uses the result to set the 
 new position of the object. 
 
 @chunk[<on-drag-method>
        (define/public (on-drag x0 y0 offset-x offset-y)
-         (set! x (+ x0 offset-x))
-         (set! y (+ y0 offset-y )))]
+         (set! x (- x0 offset-x))
+         (set! y (- y0 offset-y )))]
 
 @subsection{Button Up Event}
 
