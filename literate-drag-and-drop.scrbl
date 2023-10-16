@@ -78,7 +78,7 @@ the code. Some other literate programming packages, like
 Hyper-literate programming} and 
 @hyperlink["https://docs.racket-lang.org/brush/index.html"]{David 
 Christiansen's Brush} provide options for specifying other languages. 
-S
+
 @section{A Class for Draggable Objects}
 
 The first thing we will do is create an abstract class called 
@@ -110,20 +110,18 @@ methods for the fields.
 
 @subsection{Drawing and Clicking on an Object}
 
-Our class needs to have a @racket[draw] method to do the actual drawing of 
-the object. To determine whether the user clicked on the object, we also need 
-a method, which we'll call @racket[contains?], that returns @racket[#t] if 
-the @italic{x} and @italic{y} coordinates of a mouse click are within the 
-bounds of the object. 
+Our class needs a @racket[draw] method to do the actual drawing of the 
+object. Because every kind of object will need to be drawn differently, we 
+cannot provide an implementation in the @racket[draggable-object%] class. 
+Instead, we use the @racket[abstract] clause to declare a @racket[draw] 
+method without an implementation. The code to draw the object will need to be 
+provided by each subclass of @racket[draggable-object%]. 
 
-Because every kind of object will need to be drawn differently, we cannot 
-provide an implementation in the @racket[draggable-object%] class. Instead, 
-we use the @racket[abstract] clause to declare a @racket[draw] method without 
-an implementation. The code to draw the object will need to be provided by 
-each subclass of @racket[draggable-object%]. 
-
-Since we don't know how the object is drawn, we also have no way to tell 
-whether the user has clicked within the bounds of the object. So 
+To determine whether the user clicked on the object, we also need a method, 
+which we'll call @racket[contains?], that returns @racket[#t] if the 
+@italic{x} and @italic{y} coordinates of a mouse click are within the bounds 
+of the object. Since we don't know how the object is drawn, we also have no 
+way to tell whether the user has clicked within the bounds of the object. So 
 @racket[contains?] must also be declared as @racket[abstract]. 
 
 The code for our abstract methods is very simple:
@@ -221,7 +219,7 @@ and returns @racket[#t] if the coordinate lies inside the flag. This is used
 to determine whether the user clicked on the object. 
 
 For complex objects, the check could be quite involved, but since this is a
-simple shape, the check is very straightforward. 
+simple rectangle, the check is very straightforward. 
 
 @chunk[<flag-contains?>
        (define/override (contains? x0 y0)
@@ -280,7 +278,7 @@ displaying our draggable objects.
 @chunk[<drag-canvas>
        (define drag-canvas%
          (class canvas%
-           (inherit get-dc get-width get-height refresh)
+           (inherit refresh)
 
            <draw-background>
            <draw-objects>
@@ -290,7 +288,8 @@ displaying our draggable objects.
                                         (draw-background dc)
                                         (draw-objects dc))])))]
 
-Our subclass inherits the methods we will use and defines methods to draw the 
+Our subclass inherits the methods we will use (in this case, it is only the
+@method[window<%> refresh] method) and defines methods to draw the 
 background, draw the objects, and handle the mouse events.
 
 After defining the methods, we initialize the parent class using 
@@ -348,9 +347,10 @@ executes the appropriate code. We respond to three different events:
 @subsection{Event Handling Variables}
 
 The event handlers need to share some information about the object being 
-dragged, so we define three variables. The @racket[active-object] variable 
-will always refer to the object being dragged. Two offset variables are 
-necessary to ensure the smooth movement of the object while dragging. 
+dragged, so we define three variables to keep track of this information. The 
+@racket[active-object] variable will always refer to the object being 
+dragged. Two offset variables are necessary to ensure the smooth movement of 
+the object while dragging. 
 
 @chunk[<define-mouse-event-variables>
        (define active-object null)
@@ -385,8 +385,8 @@ is drawn in the correct place.
 
 A dragging operation begins when the user presses the mouse button. When this 
 happens, the canvas receives a @method[mouse-event% button-down?] event. The 
-first we do in response is identify which, if any, of the objects the user 
-clicked on. 
+first thing we do in response is identify which, if any, of the objects the 
+user clicked on. 
 
 To do this, we create a helper function, @racket[object-at], that takes the 
 @italic{x} and @italic{y} coordinates of the mouse and returns the object at 
@@ -429,7 +429,7 @@ store it in the @racket[active-object] variable. Finally, we compute the
 When we receive a dragging event, we make sure that the user is dragging on 
 an object. Then we get the new location of the mouse and call the object's 
 @racket[on-drag] method (see ``@secref{dragging-an-object}''). We pass the 
-new location and the offsets so that @racket[on-drag] can move the object 
+new location and the offsets so that @racket[on-drag] moves the object 
 smoothly. 
 
 @chunk[<dragging>
@@ -447,8 +447,8 @@ programming language will put the code where it belongs.}
 
 Now we can finally implement the @racket[on-drag] method of the 
 @racket[draggable-object%] class. The method subtracts the @italic{x} and 
-@italic{y} offsets from the mouse location and uses the result to set the 
-new position of the object. 
+@italic{y} offsets from the new mouse location and uses the result to set the 
+position of the object. 
 
 @chunk[<on-drag-method>
        (define/public (on-drag x0 y0 offset-x offset-y)
@@ -468,10 +468,10 @@ When the user releases the button, the dragging operation is over, so our
 
 @section{Main Program}
 
-Now that we have the canvas and object classes defined, all that is left is 
-to create the main program. Since the classes do all the hard work, this is 
-straightforward. We start by defining constants for the width and height of 
-our canvas. 
+Now that we have the object classes and the canvas defined, all that is left 
+is to create the main program. Since the classes do all the hard work, this 
+is straightforward. We start by defining constants for the width and height 
+of our canvas. 
 
 @chunk[<define-constants>
        (define WIDTH 640)
@@ -506,7 +506,7 @@ them.
 
        (send frame show #t)]       
 
-And that's it! We now have a simple, but complete example of implementing 
+And that's it! We now have a simple, but complete, example of implementing 
 drag-and-drop within the Racket GUI. We've also gotten a taste of literate 
 programming and some of its features. I encourage you to explore more 
 features of the Racket GUI library and incorporate them into your own 
