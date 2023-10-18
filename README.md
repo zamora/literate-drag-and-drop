@@ -12,4 +12,4 @@ source code produces both the program and its documentation using the same files
 
 To run the program, open the `literate-drag-and-drop.scrbl` file in [DrRacket](https://docs.racket-lang.org/drracket/index.html") and click on “Run”. You can also run `racket literate-drag-and-drop.scrbl` from the command line. To generate HTML documentation, either open the `literate-drag-and-drop.scrbl` file in [DrRacket](https://docs.racket-lang.org/drracket/index.html") and click on “Scribble HTML” or run `scribble +m literate-drag-and-drop.scrbl` from the command line.
 
-For your convenience, the HTML output is available at https://zamora.github.io/literate-drag-and-drop-docs.
+For your convenience, the HTML version of the document is available at https://zamora.github.io/literate-drag-and-drop-docs.
