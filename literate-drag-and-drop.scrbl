@@ -1,5 +1,7 @@
 #lang scribble/lp2
 
+@require[pict scriblib/figure]
+
 @title{Literate Drag and Drop Using the Racket GUI}
 @author[(author+email "Justin Zamora" "justin@zamora.com")]
 
@@ -7,7 +9,7 @@
 
 [This example was created for the 
 @hyperlink["https://racket.discourse.group/t/the-2023-racket-summer-event"]{2023
-Racket Summer Event}. The source file is available at 
+Racket Summer Event}. The source files are available at 
 @hyperlink["https://github.com/zamora/literate-drag-and-drop"]{my GitHub}.] 
 
 The @hyperlink["https://www.racket-lang.org/"]{Racket Programming Language} 
@@ -24,6 +26,11 @@ your mouse to drag the two objects around and place them anywhere on the
 canvas. Be careful, though: this example program is not robust. It doesn't do 
 any bounds checking, so it is possible to drag the objects outside the window 
 and lose them forever. If this happens, you will need to restart the program. 
+
+@figure[
+  "figure-animation"
+  @elem{Example of dragging and dropping in the Racket GUI}
+  @image["drag-and-drop-animation.gif" #:scale 0.8]]
 
 @section{Literate Programming}
 
@@ -208,6 +215,11 @@ accessibility). Then we draw the circle itself, using the
 @racket[draw-ellipse] method. We use a little bit of math to position the 
 circle at the center of the rectangle. 
 
+@figure[
+  "figure-flag"
+  @elem{Draggable Flag}
+  @image["drag-and-drop-flag.png" #:scale 0.8]]
+
 @subsection{Flag @racket[contains?] Method}
 
 @margin-note{For some objects, only certain "hot spots" should be clickable 
@@ -265,6 +277,11 @@ check whether the user clicked on it.
        (define/override (contains? x0 y0)
          (and (< x x0 (+ x width))
               (< y y0 (+ y height))))]
+
+@figure[
+  "figure-fish"
+  @elem{Draggable Fish}
+  @(standard-fish 80 40 #:color "salmon")]
 
 @section{Defining the Canvas}
 
